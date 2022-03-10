@@ -1,4 +1,4 @@
-module github.com/michaelpeterswa/wildfire/backend
+module github.com/michaelpeterswa/trailheads/backend
 
 go 1.17
 

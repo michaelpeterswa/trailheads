@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'wildfire',
+    modulePrefix: 'trailheads',
     environment,
     rootURL: '/',
     locationType: 'history',

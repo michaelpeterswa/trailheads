@@ -7,9 +7,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/michaelpeterswa/wildfire/backend/internal/cache"
-	"github.com/michaelpeterswa/wildfire/backend/internal/db"
-	"github.com/michaelpeterswa/wildfire/backend/internal/logging"
+	"github.com/michaelpeterswa/trailheads/backend/internal/cache"
+	"github.com/michaelpeterswa/trailheads/backend/internal/db"
+	"github.com/michaelpeterswa/trailheads/backend/internal/logging"
 	"go.uber.org/zap"
 )
 
@@ -44,7 +44,7 @@ func main() {
 
 	e.GET("/healthcheck", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, HealthCheck{
-			Healthy: "ok`",
+			Healthy: "ok",
 		})
 	})
 

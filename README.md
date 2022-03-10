@@ -1,5 +1,5 @@
 <h3 align="center">
-	Wildfire is a monorepo full-stack application built using Go (backend), Ember.js (frontend) TailwindCSS (styling), and DaisyUI (ui components) 
+	Trailheads is a monorepo full-stack application built using Go (backend), Ember.js (frontend) TailwindCSS (styling), and DaisyUI (ui components) 
 </h3>
 <p align="center">
 	<strong>

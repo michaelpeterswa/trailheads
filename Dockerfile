@@ -17,8 +17,8 @@ FROM golang:1.17 AS stage-go-build
 WORKDIR /go/src/app
 COPY backend/ .
 
-RUN go get -d -v ./cmd/wildfire
-RUN CGO_ENABLED=0 GOOS=linux go build ./cmd/wildfire
+RUN go get -d -v ./cmd/trailheads
+RUN CGO_ENABLED=0 GOOS=linux go build ./cmd/trailheads
 
 # -=-=-=-=-=-=- Final Image -=-=-=-=-=-=-
 
@@ -27,10 +27,10 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Copy Go Binary
-COPY --from=stage-go-build /go/src/app/wildfire .
+COPY --from=stage-go-build /go/src/app/trailheads .
 # Copy Ember Dist
 COPY --from=stage-ember-build /app/dist/ ./dist
 
 RUN apk --no-cache add ca-certificates
 
-ENTRYPOINT [ "./wildfire" ]  
+ENTRYPOINT [ "./trailheads" ]  
