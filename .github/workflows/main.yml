@@ -1,0 +1,65 @@
+---
+on: [push, pull_request]
+name: Lint/Test
+jobs:
+  commitlint:
+    #
+    # ensures commit messages follow conventional commits
+    #
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm install --save-dev @commitlint/{config-conventional,cli}
+      - run: npx commitlint --from=${{ github.event.pull_request.base.sha }}
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+  go-test:
+    strategy:
+      matrix:
+        go-version: [1.16.x, 1.17.x]
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Test
+        working-directory: backend
+        run: go test ./...
+  ember-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: JavaScript Linting
+        working-directory: frontend
+        run: npm run lint:js
+      - name: Template Linting
+        working-directory: frontend
+        run: npm run lint:hbs
+      - name: npm test
+        working-directory: frontend
+        run: npm test
+        env:
+          CI: true

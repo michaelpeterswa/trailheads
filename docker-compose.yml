@@ -1,0 +1,36 @@
+---
+version: "3.3"
+
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  backend:
+    build: backend
+    ports:
+      - 8080:8080
+    environment:
+      GIN_MODE: release
+    links:
+      - redis
+    depends_on:
+      - mongo
+      - redis
+
+  frontend:
+    build: frontend
+    ports:
+      - 4200:4200
+    restart: "always"
+    volumes:
+      - ./frontend:/app
