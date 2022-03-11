@@ -20,6 +20,10 @@ func InitMongo(ctx context.Context, uri string) (*mongo.Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return client, nil
 

@@ -15,6 +15,16 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
+  seeddb:
+    image: migrate/migrate
+    volumes:
+      - ./db/migrations:/migrations
+    entrypoint: >
+                /bin/sh -c 'sleep 5 && migrate -path=/migrations/ -database
+                "mongodb://root:example@mongo:27017/main?authSource=admin" up'
+    depends_on:
+      - "mongo"
+
   backend:
     build: backend
     ports:
@@ -23,6 +33,7 @@ services:
       GIN_MODE: release
     links:
       - redis
+      - mongo
     depends_on:
       - mongo
       - redis
