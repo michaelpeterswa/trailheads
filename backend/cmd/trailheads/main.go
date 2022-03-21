@@ -11,17 +11,11 @@ import (
 	"github.com/michaelpeterswa/trailheads/backend/internal/cache"
 	"github.com/michaelpeterswa/trailheads/backend/internal/dao"
 	"github.com/michaelpeterswa/trailheads/backend/internal/db"
+	"github.com/michaelpeterswa/trailheads/backend/internal/handlers"
 	"github.com/michaelpeterswa/trailheads/backend/internal/logging"
+	"github.com/michaelpeterswa/trailheads/backend/internal/structs"
 	"go.uber.org/zap"
 )
-
-type HealthCheck struct {
-	Healthy string `json:"healthy"`
-}
-
-type Success struct {
-	Success bool `json:"success"`
-}
 
 func main() {
 	ctx := context.Background()
@@ -42,6 +36,7 @@ func main() {
 	}
 
 	usersDAO := dao.NewUsersDAO(mongoClient)
+	usersHandler := handlers.NewUsersHandler(usersDAO)
 
 	e := echo.New()
 	e.Use(middleware.Static("dist"))
@@ -51,7 +46,7 @@ func main() {
 	}))
 
 	e.GET("/healthcheck", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, HealthCheck{
+		return c.JSON(http.StatusOK, structs.HealthCheck{
 			Healthy: "ok",
 		})
 	})
@@ -70,11 +65,7 @@ func main() {
 		return false, nil
 	}))
 
-	apiGroup.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, Success{
-			Success: true,
-		})
-	})
+	apiGroup.GET("/user", usersHandler.GetUser)
 
 	e.Any("/*", func(c echo.Context) error {
 		return c.File("dist/index.html")

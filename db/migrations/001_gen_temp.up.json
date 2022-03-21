@@ -3,11 +3,13 @@
     "documents": [
       {
         "username": "test@example.com",
-        "api-key": "33a2e979-cad8-4318-adda-b33f266f17bc"
+        "api-key": "33a2e979-cad8-4318-adda-b33f266f17bc",
+        "is-admin": true
       },
       {
-        "name": "example@test.com",
-        "version": "1a35ba47-06ce-4b82-bfd7-fa3008381879"
+        "username": "example@test.com",
+        "api-key": "1a35ba47-06ce-4b82-bfd7-fa3008381879",
+        "is-admin": true
       }
     ]
   }]
