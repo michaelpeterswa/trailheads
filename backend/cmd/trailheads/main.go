@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/labstack/echo-contrib/prometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/michaelpeterswa/trailheads/backend/internal/cache"
@@ -35,8 +36,10 @@ func main() {
 		logger.Error("unable to acquire mongo client", zap.Error(err))
 	}
 
+	// Users DAO and Handler
 	usersDAO := dao.NewUsersDAO(mongoClient)
-	usersHandler := handlers.NewUsersHandler(usersDAO)
+	usersHandler := handlers.NewUsersHandler(usersDAO, logger)
+	// Trailheads DAO and Handler
 
 	e := echo.New()
 	e.Use(middleware.Static("dist"))
@@ -44,6 +47,8 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
 	}))
+	p := prometheus.NewPrometheus("echo", nil)
+	p.Use(e)
 
 	e.GET("/healthcheck", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, structs.HealthCheck{
@@ -66,6 +71,9 @@ func main() {
 	}))
 
 	apiGroup.GET("/user", usersHandler.GetUser)
+	apiGroup.POST("/user", usersHandler.CreateUser)
+	apiGroup.PUT("/user", usersHandler.UpdateUser)
+	apiGroup.DELETE("/user", usersHandler.DeleteUser)
 
 	e.Any("/*", func(c echo.Context) error {
 		return c.File("dist/index.html")

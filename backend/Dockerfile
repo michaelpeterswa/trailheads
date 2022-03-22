@@ -1,6 +1,6 @@
 # -=-=-=-=-=-=- Compile Image -=-=-=-=-=-=-
 
-FROM golang:1.16 AS stage-compile
+FROM golang:1.17 AS stage-compile
 
 WORKDIR /go/src/app
 COPY . .
