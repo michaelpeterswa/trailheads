@@ -13,5 +13,51 @@
         "is-admin": true
       }
     ]
+  },
+  {
+    "insert": "trailheads",
+    "documents": [
+      {
+        "name": "Test Trailhead",
+        "description": "Trailhead in TestLand",
+        "directions": {
+          "exit": 52,
+          "summary": "Test Directions Summary",
+          "steps": ["Drive Forward", "Drive Left", "Stop"]
+        },
+        "elevation": 3000,
+        "parking": { "type": "Gravel", "amount": 20 },
+        "permits": [
+          { "type": "Discover Pass", "agency": "State of Washington" }
+        ],
+        "facilities": [
+          { "type": "Restroom", "amount": 2 },
+          { "type": "Campsite", "amount": 10 }
+        ],
+        "notes": ["Test Note 1", "Test Note 2"]
+      },
+      {
+        "name": "Test Trailhead Two",
+        "description": "The Best Trailhead",
+        "directions": {
+          "exit": 69,
+          "summary": "These are the directions provided as a summary.",
+          "steps": ["Drive Back", "Drive Right", "Stop"]
+        },
+        "elevation": 2000,
+        "parking": { "type": "Asphalt", "amount": 10 },
+        "permits": [
+          {
+            "type": "Northwest Forest Pass",
+            "agency": "United States Forest Service"
+          }
+        ],
+        "facilities": [
+          { "type": "Restroom", "amount": 2 },
+          { "type": "Water", "amount": 1 }
+        ],
+        "notes": ["Test Note Two 1", "Test Note Two 2"]
+      }
+    ]
   }
 ]
