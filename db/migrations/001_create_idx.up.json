@@ -11,5 +11,18 @@
       }
     ],
     "writeConcern": { "w": "majority" }
+  },
+  {
+    "createIndexes": "trailheads",
+    "indexes": [
+      {
+        "key": {
+          "name": 1
+        },
+        "name": "name",
+        "unique": true
+      }
+    ],
+    "writeConcern": { "w": "majority" }
   }
 ]

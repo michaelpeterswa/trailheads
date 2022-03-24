@@ -19,6 +19,10 @@
     "documents": [
       {
         "name": "Test Trailhead",
+        "coordinates": {
+          "latitude": 47.123456,
+          "longitude": -120.123456
+        },
         "description": "Trailhead in TestLand",
         "directions": {
           "exit": 52,
@@ -38,6 +42,10 @@
       },
       {
         "name": "Test Trailhead Two",
+        "coordinates": {
+          "latitude": 47.45678,
+          "longitude": -120.45678
+        },
         "description": "The Best Trailhead",
         "directions": {
           "exit": 69,

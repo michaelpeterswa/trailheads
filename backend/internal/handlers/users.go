@@ -26,6 +26,7 @@ func (h *UsersHandler) CreateUser(c echo.Context) error {
 
 	err := json.NewDecoder(body).Decode(&userToCreate)
 	if err != nil {
+		h.logger.Error("error decoding user body", zap.Error(err))
 		return c.JSON(http.StatusInternalServerError, structs.Success{
 			Success: false,
 		})
@@ -33,6 +34,7 @@ func (h *UsersHandler) CreateUser(c echo.Context) error {
 
 	err = h.usersDAO.CreateUser(c.Request().Context(), &userToCreate)
 	if err != nil {
+		h.logger.Error("error creating user", zap.Error(err))
 		return c.JSON(http.StatusInternalServerError, structs.Success{
 			Success: false,
 		})
@@ -47,6 +49,7 @@ func (h *UsersHandler) GetUser(c echo.Context) error {
 
 	foundUser, err := h.usersDAO.GetUser(c.Request().Context(), user)
 	if err != nil {
+		h.logger.Error("error getting user", zap.Error(err))
 		return c.JSON(http.StatusOK, structs.Success{
 			Success: false,
 		})
@@ -84,6 +87,7 @@ func (h *UsersHandler) DeleteUser(c echo.Context) error {
 
 	err := h.usersDAO.DeleteUser(c.Request().Context(), user)
 	if err != nil {
+		h.logger.Error("error deleting user", zap.Error(err))
 		return c.JSON(http.StatusOK, structs.Success{
 			Success: false,
 		})

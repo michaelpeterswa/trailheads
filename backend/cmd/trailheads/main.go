@@ -40,6 +40,8 @@ func main() {
 	usersDAO := dao.NewUsersDAO(mongoClient)
 	usersHandler := handlers.NewUsersHandler(usersDAO, logger)
 	// Trailheads DAO and Handler
+	trailheadsDAO := dao.NewTrailheadsDAO(mongoClient)
+	trailheadsHandler := handlers.NewTrailheadsHandler(trailheadsDAO, logger)
 
 	e := echo.New()
 	e.Use(middleware.Static("dist"))
@@ -70,10 +72,17 @@ func main() {
 		return false, nil
 	}))
 
+	// Users Routing
 	apiGroup.GET("/user", usersHandler.GetUser)
 	apiGroup.POST("/user", usersHandler.CreateUser)
 	apiGroup.PUT("/user", usersHandler.UpdateUser)
 	apiGroup.DELETE("/user", usersHandler.DeleteUser)
+	// Trailheads Routing
+	apiGroup.GET("/trailhead", trailheadsHandler.GetTrailhead)
+	apiGroup.POST("/trailhead", trailheadsHandler.CreateTrailhead)
+	apiGroup.PUT("/trailhead", trailheadsHandler.UpdateTrailhead)
+	apiGroup.DELETE("/trailhead", trailheadsHandler.DeleteTrailhead)
+	apiGroup.GET("/trailheads", trailheadsHandler.GetTrailheads)
 
 	e.Any("/*", func(c echo.Context) error {
 		return c.File("dist/index.html")

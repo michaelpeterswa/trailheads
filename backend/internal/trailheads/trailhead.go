@@ -2,14 +2,15 @@ package trailheads
 
 // Non-exhaustive Trailhead Object
 type Trailhead struct {
-	Name        string     `json:"name" bson:"name"`
-	Description string     `json:"description" bson:"description"`
-	Directions  Directions `json:"directions" bson:"directions"`
-	Elevation   int64      `json:"elevation" bson:"elevation"`
-	Parking     Parking    `json:"parking" bson:"parking"`
-	Permits     []Permit   `json:"permits" bson:"permits"`
-	Facilities  []Facility `json:"facilities" bson:"facilities"`
-	Notes       []string   `json:"notes" bson:"notes"`
+	Name        string      `json:"name" bson:"name"`
+	Coordinates Coordinates `json:"coordinates" bson:"coordinates"`
+	Description string      `json:"description" bson:"description"`
+	Directions  Directions  `json:"directions" bson:"directions"`
+	Elevation   int64       `json:"elevation" bson:"elevation"`
+	Parking     Parking     `json:"parking" bson:"parking"`
+	Permits     []Permit    `json:"permits" bson:"permits"`
+	Facilities  []Facility  `json:"facilities" bson:"facilities"`
+	Notes       []string    `json:"notes" bson:"notes"`
 }
 
 // Coordinate Pair for Site :: Decimal Degrees
